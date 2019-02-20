@@ -1,0 +1,99 @@
+
+
+/*
+
+问题 B: Day of Week
+时间限制: 1 Sec  内存限制: 32 MB
+提交: 1016  解决: 290
+[提交][状态][讨论版][命题人:外部导入]
+题目描述
+We now use the Gregorian style of dating in Russia. The leap years are years with number divisible by 4 but not divisible by 100, or divisible by 400.
+For example, years 2004, 2180 and 2400 are leap. Years 2004, 2181 and 2300 are not leap.
+Your task is to write a program which will compute the day of week corresponding to a given date in the nearest past or in the future using today’s agreement about dating.
+
+输入
+There is one single line contains the day number d, month name M and year number y(1000≤y≤3000). The month name is the corresponding English name starting from the capital letter.
+
+输出
+Output a single line with the English name of the day of week corresponding to the date, starting from the capital letter. All other letters must be in lower case.
+
+样例输入
+21 December 2012
+5 January 2013
+样例输出
+Friday
+Saturday
+
+*/
+
+#include <iostream>
+#include<stdio.h>
+#include<vector> 
+#include<string.h>
+#define Max(a,b) ((a)>(b)?(a):(b))
+#define Min(a,b) ((a)<(b)?(a):(b))
+using namespace std;
+char months[13][40]={" ","January","February","March","April","May","June","July",
+"August","September","October","November","December"};
+
+int look_month(char c[])
+{
+    for(int i=1;i<13;i++)
+    {
+        if(!strcmp(c,months[i])) 
+        {
+            return i;
+            break;
+        }
+    }
+}
+
+bool leap(int year)
+{
+    return (year%4==0 && year%100!=0) || (year%400==0);
+}
+
+int days[13][2] = { { 0,0 },{ 31,31 },{ 28,29 },{ 31,31 },{ 30,30 },{ 31,31 },{ 30,30 },{ 31,31 },{ 31,31 },
+{ 30,30 },{ 31,31 },{ 30,30 },{ 31,31 } };
+char week[8][40]={"Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday" };//此处注意星期天
+int main()
+{
+    int day2,year2,month2;
+    
+    char m[40];
+    
+    while(scanf("%d%s%d",&day2,m,&year2)!=EOF)
+    {
+        
+        int day1=1,year1=1000,month1=1;//1000年1月1日是星期三
+        int total=3;
+        month2 = look_month(m);
+        while(year2 > year1+1)
+        {
+            if(leap(year1)) total+=366;
+            else total+=365;
+            year1++;
+            total = total%7;
+        }
+        while(year1<year2 || month1<month2 || day1<day2)
+        {
+            day1++;
+            if(day1==days[month1][leap(year1)]+1)
+            {
+                month1++;
+                day1=1;
+            }
+            if(month1==13)
+            {
+                year1++;
+                month1=1;
+            }
+            total++;
+        }
+        
+        printf("%s\n",week[total%7]);
+        
+    }
+    return 0;
+}
+   
