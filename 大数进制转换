@@ -1,0 +1,91 @@
+/*
+问题 C: 进制转换
+时间限制: 1 Sec  内存限制: 32 MB
+提交: 616  解决: 248
+[提交][状态][讨论版][命题人:外部导入]
+题目描述
+将一个长度最多为30位数字的十进制非负整数转换为二进制数输出。
+
+输入
+多组数据，每行为一个长度不超过30位的十进制非负整数。
+（注意是10进制数字的个数可能有30个，而非30bits的整数）
+
+输出
+每行输出对应的二进制数。
+
+样例输入
+985
+211
+1126
+样例输出
+1111011001
+11010011
+10001100110
+
+
+
+
+
+
+*/
+
+
+
+#include <iostream>
+#include<stdio.h>
+#include<vector> 
+#include<string.h>
+#include<math.h>
+#include<stack>
+#define Max(a,b) ((a)>(b)?(a):(b))
+#define Min(a,b) ((a)<(b)?(a):(b))
+using namespace std;
+ 
+ 
+ 
+ 
+int main()
+{
+     
+    char b[400];
+    int n=2;
+    while(scanf("%s",b)!=EOF)
+    {
+         
+        //if(b[0]=='0') {printf("0\n");continue;}
+        int len = strlen(b);
+        stack<int> c;
+        int a[200];
+         
+        for(int i=0;i<len;i++)  //将字符转化为数字；
+        {
+            a[i] = (int)(b[i] - '0');
+        }
+        
+        int start=0;
+        if(len==1 && b[0]=='0') {printf("0\n");continue;}
+        while((start!=len-1)||(a[len-1]!=0))
+        {
+            int flag = 0;
+            for(int i=start;i<len;i++)
+            {
+                if(i==len-1) c.push(a[i]%2); //通过最后一位值确定输出1还是0；
+                a[i+1] += (a[i]%2)*10;//上一位除2除不尽，交由下一位
+                a[i] = a[i]/2;
+                if(flag==0&&(a[i]!=0))
+                {
+                    flag=1;
+                    start=i;
+                }
+            }
+        }
+        
+        while(c.size())
+        {
+            printf("%d",c.top());
+            c.pop();
+        }
+        puts("");
+    }
+    return 0;
+}
