@@ -1,0 +1,79 @@
+/*
+问题 C: 字符串的查找删除
+时间限制: 1 Sec  内存限制: 32 MB
+提交: 938  解决: 261
+[提交][状态][讨论版][命题人:外部导入]
+题目描述
+给定一个短字符串（不含空格），再给定若干字符串，在这些字符串中删除所含有的短字符串。
+
+输入
+输入只有1组数据。
+输入一个短字符串（不含空格），再输入若干字符串直到文件结束为止。
+
+输出
+删除输入的短字符串(不区分大小写)并去掉空格,输出。
+
+样例输入
+in
+#include 
+int main()
+{
+
+printf(" Hi ");
+}
+样例输出
+#clude
+tma()
+{
+
+prtf("Hi");
+}
+提示
+注:将字符串中的In、IN、iN、in删除。
+
+
+
+transform 函数的学习
+
+*/
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include<stdio.h>
+#include<vector> 
+#include<string.h>
+#include<math.h>
+#include<stack>
+#define Max(a,b) ((a)>(b)?(a):(b))
+#define Min(a,b) ((a)<(b)?(a):(b))
+using namespace std;
+ 
+ 
+ 
+ 
+int main()
+{
+    string str;
+    string input1,input2;
+    getline(cin,str);
+    transform(str.begin(), str.end(), str.begin(),::toupper);
+    while(getline(cin,input1))
+    {
+        int pos=0;
+        while((pos = input1.find(' '))!=-1){
+            input1.erase(pos,1);
+        }
+        
+        input2 = input1;
+        transform(input1.begin(),input1.end(),input2.begin(),::toupper);
+        while ((pos = input2.find(str)) != -1){
+            int len = str.size();
+    	    input1.erase(pos,len);
+    	    input2 = input1;
+    	    transform(input1.begin(),input1.end(),input2.begin(),::toupper);
+    	}
+    	
+    	cout<<input1<<endl;
+    }
+}
