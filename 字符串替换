@@ -1,0 +1,86 @@
+/*
+问题 D: 单词替换
+时间限制: 1 Sec  内存限制: 32 MB
+提交: 744  解决: 224
+[提交][状态][讨论版][命题人:外部导入]
+题目描述
+输入一个字符串，以回车结束（字符串长度<=100）。该字符串由若干个单词组成，单词之间用一个空格隔开，所有单词区分大小写。现需要将其中的某个单词替换成另一个单词，并输出替换之后的字符串。
+
+输入
+多组数据。每组数据输入包括3行，
+第1行是包含多个单词的字符串 s，
+第2行是待替换的单词a，(长度<=100)
+第3行是a将被替换的单词b。(长度<=100)
+s, a, b 最前面和最后面都没有空格。
+输出
+每个测试数据输出只有 1 行，
+将s中所有单词a替换成b之后的字符串。
+样例输入
+I love Tian Qin
+I
+You
+样例输出
+You love Tian Qin
+
+
+*/
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include<stdio.h>
+#include<vector> 
+#include<string.h>
+#include<math.h>
+#include<stack>
+#define Max(a,b) ((a)>(b)?(a):(b))
+#define Min(a,b) ((a)<(b)?(a):(b))
+using namespace std;
+ 
+ 
+ 
+ 
+int main()
+{
+    char str[400];
+    char key[100],input[100];
+    
+   
+    while(cin.getline(str,400))
+    {
+        scanf("%s%s",key,input);
+        getchar();
+        int len = strlen(str);
+        int len1 = strlen(key);
+        int j=0;
+        char a[200];
+        for(int i=0;i<len;i++)
+        {
+            if(str[i]==key[0]) //匹配首字母进入匹配模式
+            {
+                for(j=0;j<len1;j++)
+                {
+                    
+                    if(str[i++]!=key[j])
+                    {
+                        i-=j+1;//不满足返回不匹配项
+                        putchar(key[0]);
+                        j = 0;
+                        break;
+                    }
+                }
+                
+                if(j==len1) {printf("%s",input);i--;j = 0;}//满足条件替换
+            }
+            else
+            {
+                putchar(str[i]);
+            }
+        }
+     
+        
+    printf("\n");	
+    }
+    
+    return 0;
+}
