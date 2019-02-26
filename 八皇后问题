@@ -1,0 +1,56 @@
+#include <iostream>
+#include<stdio.h>
+#include<vector>
+#include<string.h>
+#include<math.h>
+#include<algorithm>
+#define Max(a,b) ((a)>(b)?(a):(b))
+#define Min(a,b) ((a)<(b)?(a):(b))
+using namespace std;
+
+
+int a[100],n;
+
+ bool hashTable[100] = {false};
+ int P[100];
+ int count1=0;
+ void EightQueen(int index)
+ {
+     if(index == n+1)  //找到一条路线，退出
+     {
+        count1++;
+        return;
+     }
+     
+     for(int x = 0;x<n;x++)
+     {
+         if(hashTable[x] == false){  //未被选择的皇后可以用于排列
+             bool flag = true;
+             for(int pre = 1;pre <index;pre++){
+                 if(abs(index-pre) == abs(x-P[pre])) //斜率为1或-1处于对角线
+                 {  
+                     flag = false;                    //此方案提前废止
+                     break;
+                 }
+             }
+         if(flag){         
+            P[index] = x;     
+            hashTable[x] = true; //把要放置的x标识
+            EightQueen(index+1);  
+            hashTable[x] = false; //还原到未放置x的状态
+            }
+         }
+     }
+     
+     
+ }
+
+
+int main()
+{
+    
+    n=8;
+    EightQueen(1);//从1开始生成
+    printf("%d",count1);    
+        
+}
