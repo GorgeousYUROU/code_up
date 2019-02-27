@@ -1,0 +1,52 @@
+
+#include <iostream>
+#include<stdio.h>
+#include<vector>
+#include<string.h>
+#include<math.h>
+#include<algorithm>
+#define Max(a,b) ((a)>(b)?(a):(b))
+#define Min(a,b) ((a)<(b)?(a):(b))
+using namespace std;
+
+
+int a[100],n;
+
+ bool hashTable[100] = {false};
+ int P[100];
+ int count1=0;
+ void GenerateP(int index)
+ {
+     if(index == n+1)  //找到一条路线，退出
+     {
+        for(int i=1;i<=n;i++)
+        {
+            printf("%d ",P[i]);
+        }
+        puts("");
+        return;
+     }
+     
+     for(int x = 1;x<=n;x++)  //每次排列提取首位后再进行排列，此排列每次进入递归都有一个for循环，类似树形多分叉
+     {
+         
+         if(hashTable[x] == false){         
+            P[index] = x;     
+            hashTable[x] = true; //把要放置的x标识
+            GenerateP(index+1);  
+            hashTable[x] = false; //还原到未放置x的状态
+            }
+        
+     }
+     
+     
+ }
+
+
+int main()
+{
+    
+    n=3;
+    GenerateP(1);//从1开始生成
+        
+}
