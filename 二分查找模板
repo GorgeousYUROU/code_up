@@ -35,3 +35,29 @@ int look(int left,int right,int key)
 	}
 	return left; 
 }
+
+![image](http://github.com/GorgeousYUROU/code_up/raw/master/images/binary_look.PNG)
+
+
+
+🌰：求方程=0的根
+const double eps = 10e-5;
+double f(double x){
+  return ...;//计算f(x)
+}
+double look(double left,double right)
+{
+	int mid;
+	while(left-right >eps)  //精度为10^-5
+	{
+		mid = (left + right/2);
+		
+		if(f[mid]>0) 
+		{
+			right = mid; //往左区间逼近
+		}
+		else left = mid;
+	}
+	
+	return mid; 
+}
