@@ -36,7 +36,8 @@ int look(int left,int right,int key)
 	return left; 
 }
 
-![Aaron Swartz](https://raw.githubusercontent.com/GorgeousYUROU/code_up/master/images/binary_look.PNG)
+
+![avatar](https://raw.githubusercontent.com/GorgeousYUROU/code_up/master/images/binary_look.PNG)
 
 
 
