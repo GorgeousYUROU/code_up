@@ -22,11 +22,11 @@ int a[100],n;
         return;
      }
      
-     for(int x = 1;x<=n;x++)
+     for(int x = 1;x<=n;x++)  //x表示皇后所在列
      {
          if(hashTable[x] == false){  //未被选择的皇后可以用于排列
              bool flag = true;
-             for(int pre = 1;pre <index;pre++){
+             for(int pre = 1;pre <index;pre++){   //index,pre都表示皇后所在行
                  if(abs(index-pre) == abs(x-P[pre])) //斜率为1或-1处于对角线
                  {  
                      flag = false;                    //此方案提前废止
