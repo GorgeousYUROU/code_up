@@ -1,0 +1,62 @@
+/*
+题目：输入两个C语言语句，第一句为正常的C语言变量定义语句，符合C语言语法要求，变量间可以有多个空格，包含数组，指针定义等。第二句为变量运算语句，要求输出第二个C语言语句中未定义的变量。 
+如 
+int x12,y=1,num_stu=89,a[30],*p; 
+Sum = num+x12*y; 
+输出 
+Sum num
+
+*/
+
+
+
+
+//gets参数只能是指针
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int isNeed(char c){
+	int temp = (int) c;
+	int temp1 = (int)'_';
+	if((65<=temp && temp<=90) || (97<=temp && temp<=122) || temp==temp1) return 1;
+	else return 0;
+}
+int main(){
+	int size =1024;
+  
+  //为指针分配内存
+	char *buff = (char*)malloc(size);
+	char *new_buff = (char*)malloc(size);
+	char *pch;
+	char b[100][100];
+	while(gets(buff)!=NULL)
+	{
+	    int i;
+		gets(new_buff);
+		pch = strtok(buff," ,=*;[");
+		i=0;
+		while(pch!=NULL){
+			if(isNeed(pch[0]))strcpy(b[i++],pch);
+			pch = strtok(NULL," ,=*;[");  //注意此处是NULL
+		}
+		int flag = 0;
+		pch = strtok(new_buff," ,=+-*/(;");
+		while(pch!=NULL)
+		{
+			if(isNeed(pch[0])){
+				for(int j=0;j<i;j++)
+				{
+					if(strcmp(b[j],pch)==0) break;
+				}
+				if(j==i) {
+					if(flag) printf(" ");
+					printf("%s",pch);
+					flag=1;
+				}
+				pch = strtok(NULL," ,=+-*/(;");
+			}
+		}
+		printf("\n");
+
+	}
+}
