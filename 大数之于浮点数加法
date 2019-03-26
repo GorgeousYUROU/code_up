@@ -1,0 +1,88 @@
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#define max(a,b) ((a)>(b)?(a):(b))
+#define Max1 50001
+struct Big{
+	int d[5000];
+	int size;
+	Big(){
+		memset(d,0,sizeof(d));
+		size = 0;
+	}
+}; 
+//切割浮点数为两个大数
+Big change(char s[],Big &a1,int size,int size1){ 
+	Big a;
+	a1.size = size;
+	int temp = size-size1;
+	int len = strlen(s);
+	int flag = 0;
+	for(int i=len-1;i>=0;i--){
+		if(s[i]=='.'){
+			flag =1;
+			continue;
+		}
+		if(flag) a.d[a.size++] = s[i] - '0';
+		else a1.d[temp++] = s[i] -'0';
+	}
+	return a;
+}
+//对浮点数的两个部分分别加合
+Big add(Big a,Big b,Big a1,Big b1,int &size){
+	int carry =0;
+	Big c;
+	for(int i=0;i<a1.size || i<b1.size;i++){
+		int temp = carry + a1.d[i] + b1.d[i];
+		c.d[c.size++] = temp%10;
+		carry = temp/10; 
+	}
+	for(int i=0;i<a.size || i<b.size;i++){
+		int temp = carry + a.d[i] + b.d[i];
+		c.d[c.size++] = temp%10;
+		carry = temp/10; 
+	}
+	if(carry!=0) c.d[c.size++] = carry;
+	int temp =0;
+  //存在数的地位为0，把数组地位置-1
+	while(c.size>1 && c.d[temp]==0){
+		c.d[temp++]=-1;
+	}
+	return c;
+	
+}
+void print(Big a,int size){
+	int i;
+	for(i=a.size-1;i>=0;i--){
+		if(a.d[i]==-1) continue;
+		if(i==size-1) {
+			putchar('.');
+		}		
+		printf("%d",a.d[i]);		
+	}
+	
+	puts("");
+}
+int main(){
+	int n;
+	
+	while(scanf("%d",&n)!=EOF){
+		int bp1,bp2;
+		while(n--){
+			Big a,b,c,a1,b1;
+	        char s1[Max1],s2[Max1];
+	        char *pch1,*pch2;
+	        scanf("%s%s",s1,s2);
+	        getchar();
+	        pch1 = strchr(s1,'.');
+	        pch2 = strchr(s2,'.');
+	        int size = max(strlen(pch1)-1,strlen(pch2)-1);
+			
+			a = change(s1,a1,size,strlen(pch1)-1);
+			b = change(s2,b1,size,strlen(pch2)-1);
+			c = add(a,b,a1,b1,size);
+			print(c,size);
+		}
+	}
+	return 0;
+}
